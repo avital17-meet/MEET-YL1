@@ -6,8 +6,8 @@ user_cell={"x":0,"y":0,"radius":10,"dy":0,"dx":0,"color":"black"}
 user_cell=meet.create_cell(user_cell)
 cells.append(user_cell)
 colors=["red","blue","pink","purple","black","orange","green","gray","gold", "yellow"]
-for x in range (5):
-	cell={"x":get_random_x(),"y":get_random_y(),"radius":random.randint(3,10),"dy":random.uniform(-1.00,2.00),"dx":random.uniform(-1.00,2.00),"color":random.choice(colors)}
+for x in range (20):
+	cell={"x":get_random_x(),"y":get_random_y(),"radius":random.randint(10,20),"dy":random.uniform(-1.00,2.00),"dx":random.uniform(-1.00,2.00),"color":random.choice(colors)}
 	z=create_cell(cell)
 	cells.append(z)
 
@@ -40,23 +40,25 @@ def Collision(cells):
 			if(abs(j.ycor()-i.ycor())<i.get_radius()/2):
 				if(abs(j.xcor()-i.xcor())<i.get_radius()/2):
 					if (i.get_radius()>j.get_radius()):
+						if j == user_cell:
+							exit()
 						i.set_radius(j.get_radius()/2+i.get_radius())
-						j.set_radius(random.uniform(5,user_cell.get_radius()+10))
+						j.set_radius(random.uniform(3,10))
 						j.goto(meet.get_random_x(),meet.get_random_y())
 						j.set_dy(random.uniform(-1.00,2.00))
 						j.set_dx(random.uniform(-1.00,2.00))
 						meet.move_cell(j)
+						
 					elif(j.get_radius()>i.get_radius()):
-						if(j['radius']==user_cell['radius'] and j['dx']==user_cell['dx'] and j['dy']==user_cell['dy']):
-							turtle.write("Game Over!")
-							turtle.mainloop()
-						else:
-							j.set_radius(i.get_radius()/2+j.get_radius())
-							i.set_radius(random.uniform(5,user_cell.get_radius()+10))
-							i.goto(meet.get_random_x(),meet.get_random_y())
-							i.set_dy(random.uniform(-1.00,2.00))
-							i.set_dx(random.uniform(-1.00,2.00))
-							meet.move_cell(i)
+						if i == user_cell:
+							exit()
+						j.set_radius(i.get_radius()/2+j.get_radius())
+						i.set_radius(random.uniform(3,10))
+						i.goto(meet.get_random_x(),meet.get_random_y())
+						i.set_dy(random.uniform(-1.00,2.00))
+						i.set_dx(random.uniform(-1.00,2.00))
+						meet.move_cell(i)
+
 
 while True :
 	move_cells(cells)
